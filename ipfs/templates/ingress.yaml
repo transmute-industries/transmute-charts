@@ -4,5 +4,5 @@ metadata:
   name: {{ .Release.Name }}-ingress
 spec:
   backend:
-    serviceName: {{ .Release.Name }}-ganache
-    servicePort: '8545'
+    serviceName: {{ .Release.Name }}-ipfs
+    servicePort: '5001'

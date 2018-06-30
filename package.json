@@ -6,7 +6,8 @@
   "scripts": {
     "package:ganache": "helm package ganache",
     "helm:index": "helm repo index . ",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "force:clean": "kubectl get pods -o json | jq -c '.items[] | select(.metadata.deletionTimestamp) | .metadata.name' | xargs -I '{}' kubectl delete pod --force --grace-period 0 '{}'"
   },
   "repository": {
     "type": "git",
