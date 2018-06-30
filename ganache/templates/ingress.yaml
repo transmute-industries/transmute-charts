@@ -1,8 +1,0 @@
-apiVersion: voyager.appscode.com/v1beta1
-kind: Ingress
-metadata:
-  name: {{ .Release.Name }}-ingress
-spec:
-  backend:
-    serviceName: {{ .Release.Name }}-ganache
-    servicePort: '8545'

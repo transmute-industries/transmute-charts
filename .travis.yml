@@ -4,38 +4,35 @@ env:
 - CHANGE_MINIKUBE_NONE_USER=true
 
 before_script:
+# install minikube
 - sudo apt-get update
 - curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/v1.9.0/bin/linux/amd64/kubectl && chmod +x kubectl && sudo mv kubectl /usr/local/bin/
 - curl -Lo minikube https://storage.googleapis.com/minikube/releases/v0.25.2/minikube-linux-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/
 - sudo minikube start --vm-driver=none --kubernetes-version=v1.9.0
 - minikube update-context
 - JSONPATH='{range .items[*]}{@.metadata.name}:{range @.status.conditions[*]}{@.type}={@.status};{end}{end}'; until kubectl get nodes -o jsonpath="$JSONPATH" 2>&1 | grep -q "Ready=True"; do sleep 1; done
+# install helm
 - curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get > get_helm.sh
 - chmod 700 get_helm.sh
 - sudo ./get_helm.sh
-- helm init
-- ./install_nsenter.sh
+# install nsenter
+- sudo apt-get install libncurses5-dev libslang2-dev gettext zlib1g-dev libselinux1-dev debhelper lsb-release pkg-config po-debconf autoconf automake autopoint libtool
+- TMP=$(mktemp -d --suffix=NSENTER_TMP)
+- wget https://www.kernel.org/pub/linux/utils/util-linux/v2.30/util-linux-2.30.2.tar.gz -qO - | tar -xz -C $TMP/
+- cd $TMP/util-linux-2.30.2 && ./autogen.sh && ./configure && make nsenter
+- mkdir -p $HOME/.local/bin
+- sudo cp -v $TMP/util-linux-2.30.2/nsenter $HOME/.local/bin/nsenter
+- sudo chmod +x $HOME/.local/bin/nsenter
+- sudo cp -v $HOME/.local/bin/nsenter /usr/bin/nsenter
 
 script:
-
+# init helm
+- helm init
 # install voyager in minikube
 - curl -fsSL https://raw.githubusercontent.com/appscode/voyager/7.2.0/hack/deploy/voyager.sh | bash -s -- --provider=minikube
-
 # install ipfs
 - helm install --name dapp-storage ./ipfs  
-
-# test ipfs 
-# - sleep 100
-- VOYAGER_IPFS=$(minikube service --url voyager-dapp-storage-ingress )
-- curl -s -k -X GET \
-  --url $VOYAGER_IPFS/api/v0/id 
-
-
 # install ganache
 - helm install --name ethereum-testnet ./ganache  
-# test ganache
-- sleep 400
-- VOYAGE_GANACHE=$(minikube service --url voyager-ethereum-testnet-ingress )
-- curl -s -k -X POST \
-  --url $VOYAGE_GANACHE \
-  --data '{"jsonrpc":"2.0","method":"web3_clientVersion","params":[],"id":68}'
+# view services
+- kubctl get svc
