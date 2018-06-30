@@ -3,11 +3,11 @@ entries:
   ganache:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2018-06-29T21:16:49.442049-05:00
-    description: A Helm chart for Kubernetes
-    digest: eb61948748663ee742f1fcb67fb0c1fa9592dfce493ce8960fa2e541b5ced04f
+    created: 2018-06-29T21:22:14.388851-05:00
+    description: Transmute Ganache Helm Chart (Danger!)
+    digest: 53f232ced4b4d6d3c150d365233f1bc9d087bba45c9d3ebc14d31896ffacd93b
     name: ganache
     urls:
     - ganache-0.1.0.tgz
     version: 0.1.0
-generated: 2018-06-29T21:16:49.44153-05:00
+generated: 2018-06-29T21:22:14.388161-05:00

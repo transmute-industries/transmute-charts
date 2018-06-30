@@ -10,10 +10,18 @@ $ helm search | grep transmute
 transmute-charts/ganache             0.1.0   Custom Ganache Chart (Danger!)
 ```
 
+## Development
+
+```
+npm run package:ganache
+npm run helm:index
+```
+
 # Current content:
 
 - Ganache
 
 ### Thanks
+
 - https://hackernoon.com/using-a-private-github-repo-as-helm-chart-repo-https-access-95629b2af27c
 - https://github.com/lwolf/kube-charts
