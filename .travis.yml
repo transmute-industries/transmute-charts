@@ -25,7 +25,7 @@ script:
 - helm install --name dapp-storage ./ipfs  
 
 # test ipfs 
-- sleep 100
+# - sleep 100
 - curl -s -k -X GET \
   --url $(minikube service --url voyager-dapp-storage-ingress )/api/v0/id 
 
@@ -34,6 +34,6 @@ script:
 - helm install --name ethereum-testnet ./ganache  
 # test ganache
 - sleep 200
-- curl -s -k -X POST \
-  --url $(minikube service --url voyager-ethereum-testnet-ingress ) \
-  --data '{"jsonrpc":"2.0","method":"web3_clientVersion","params":[],"id":68}'
+# - curl -s -k -X POST \
+#   --url $(minikube service --url voyager-ethereum-testnet-ingress ) \
+#   --data '{"jsonrpc":"2.0","method":"web3_clientVersion","params":[],"id":68}'
