@@ -3,7 +3,7 @@ entries:
   ganache:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2018-06-29T23:13:01.519344-05:00
+    created: 2018-06-29T23:15:37.081872-05:00
     description: Transmute Ganache Helm Chart (Danger!)
     digest: 178843d8507523d0126cd2ddb164b3407ae06e7fb147ecd8b3d5dbf76992f21f
     name: ganache
@@ -12,22 +12,12 @@ entries:
     version: 0.1.0
   ipfs:
   - apiVersion: v1
-    appVersion: v0.4.9
-    created: 2018-06-29T23:13:01.519735-05:00
-    description: A Helm chart for the Interplanetary File System
-    digest: 178fd7dc95e074cb53160a3e51c753a3c4119f3904e5b56a9f27b00dac26f68e
-    home: https://ipfs.io/
-    icon: https://raw.githubusercontent.com/ipfs/logo/master/raster-generated/ipfs-logo-128-ice-text.png
-    keywords:
-    - ipfs
-    - distributed-web
-    maintainers:
-    - email: yuvipanda@gmail.com
-      name: YuviPanda
+    appVersion: "1.0"
+    created: 2018-06-29T23:15:37.082657-05:00
+    description: Transmute IPFS Helm Chart (Danger!)
+    digest: 5244ac7a7c20cc6760c1e40f2b436daa7372ae494a9c1f283d6046d3e7e11d1f
     name: ipfs
-    sources:
-    - https://github.com/ipfs/go-ipfs
     urls:
-    - ipfs-0.2.2.tgz
-    version: 0.2.2
-generated: 2018-06-29T23:13:01.518404-05:00
+    - ipfs-0.1.0.tgz
+    version: 0.1.0
+generated: 2018-06-29T23:15:37.081441-05:00
