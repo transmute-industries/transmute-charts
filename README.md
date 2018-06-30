@@ -12,6 +12,12 @@ $ helm search | grep transmute
 $ helm repo remove transmute-charts
 ```
 
+### ganache
+
+```
+helm install --name ethereum-testnet transmute-charts/ganache
+```
+
 ## Development
 
 ```
