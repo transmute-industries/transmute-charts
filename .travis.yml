@@ -26,14 +26,16 @@ script:
 
 # test ipfs 
 # - sleep 100
+- VOYAGER_IPFS=$(minikube service --url voyager-dapp-storage-ingress )
 - curl -s -k -X GET \
-  --url $(minikube service --url voyager-dapp-storage-ingress )/api/v0/id 
+  --url $VOYAGER_IPFS/api/v0/id 
 
 
 # install ganache
 - helm install --name ethereum-testnet ./ganache  
 # test ganache
-- sleep 200
-# - curl -s -k -X POST \
-#   --url $(minikube service --url voyager-ethereum-testnet-ingress ) \
-#   --data '{"jsonrpc":"2.0","method":"web3_clientVersion","params":[],"id":68}'
+- sleep 400
+- VOYAGE_GANACHE=$(minikube service --url voyager-ethereum-testnet-ingress )
+- curl -s -k -X POST \
+  --url $VOYAGE_GANACHE \
+  --data '{"jsonrpc":"2.0","method":"web3_clientVersion","params":[],"id":68}'
