@@ -14,7 +14,7 @@ before_script:
 - chmod 700 get_helm.sh
 - sudo ./get_helm.sh
 - helm init
-- ./ci/install_nsenter.sh
+- ./install_nsenter.sh
 
 script:
 # install voyager in minikube
