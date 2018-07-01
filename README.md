@@ -26,12 +26,13 @@ helm install --name ethereum-testnet transmute-charts/ganache
 
 ## Development
 
+Update the repo (docs directory)
+
 ```
-npm run helm:package
-npm run helm:index
+npm run helm:repo:update
 ```
 
-### Thanks
+### References
 
 - [Github Private Helm Chart Repo](https://hackernoon.com/using-a-private-github-repo-as-helm-chart-repo-https-access-95629b2af27c)
 - [Similar Helm Repo Example](https://github.com/lwolf/kube-charts)
