@@ -31,10 +31,6 @@ npm run helm:package
 npm run helm:index
 ```
 
-# Current content:
-
-- Ganache
-
 ### Thanks
 
 - https://hackernoon.com/using-a-private-github-repo-as-helm-chart-repo-https-access-95629b2af27c
