@@ -30,6 +30,6 @@ script:
 - helm init
 # wait for tiller
 - sleep 200 
-- helm install --name dapp-storage ./ipfs  
-- helm install --name ethereum-testnet ./ganache  
+- helm install --name dapp-storage ./charts/ipfs  
+- helm install --name ethereum-testnet ./charts/ganache  
 - kubectl get svc

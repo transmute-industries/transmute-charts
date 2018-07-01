@@ -4,8 +4,9 @@
   "description": "[Github](https://github.com/transmute-industries/transmute-charts)",
   "main": "index.js",
   "scripts": {
-    "helm:package": "helm package ganache ipfs",
-    "helm:index": "helm repo index . ",
+    "helm:package": "helm package ./charts/* --destination ./repo",
+    "helm:index": "helm repo index ./repo ",
+    "helm:repo:update": "npm run helm:package && npm run helm:index",
     "test": "echo \"Error: no test specified\" && exit 1",
     "force:clean": "kubectl get pods -o json | jq -c '.items[] | select(.metadata.deletionTimestamp) | .metadata.name' | xargs -I '{}' kubectl delete pod --force --grace-period 0 '{}'"
   },

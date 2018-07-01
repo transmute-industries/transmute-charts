@@ -7,7 +7,7 @@
 Helm repository hosted using github-pages to simplify installation and dependency management of charts. Currently ingress must be configured seperately.
 
 ```
-$ helm repo add transmute-charts https://charts.transmute.network
+$ helm repo add transmute-charts https://charts.transmute.network/repo
 $ helm search | grep transmute
 $ helm repo remove transmute-charts
 ```
