@@ -1,0 +1,13 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ganache-ingress
+spec:
+  rules:
+  - host: ganache.transmute.minikube
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: {{ .Release.Name }}-ganache
+          servicePort: 8545

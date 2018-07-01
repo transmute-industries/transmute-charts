@@ -1,2 +1,11 @@
 1. Get the application URL by running these commands:
 
+{{- if contains "ClusterIP"  .Values.service.type }}
+
+  export POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app={{ template "ganache.name" . }},release={{ .Release.Name }}"  -o jsonpath="{.items[0].metadata.name}")
+  
+  echo "Use the Ethereum RPC by accessing http://localhost:8545"
+
+  kubectl --namespace {{ .Release.Namespace}} port-forward $POD_NAME 8545:8545
+
+{{- end }}

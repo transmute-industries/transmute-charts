@@ -18,6 +18,12 @@ $ helm repo remove transmute-charts
 helm install --name ethereum-testnet transmute-charts/ganache
 ```
 
+### ipfs
+
+```
+helm install --name ethereum-testnet transmute-charts/ganache
+```
+
 ## Development
 
 ```
