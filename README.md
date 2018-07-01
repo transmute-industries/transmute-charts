@@ -4,7 +4,7 @@
 
 [Github](https://github.com/transmute-industries/transmute-charts)
 
-Helm repository hosted using github-pages to simplify installation and dependency management of my charts.
+Helm repository hosted using github-pages to simplify installation and dependency management of charts. Currently ingress must be configured seperately.
 
 ```
 $ helm repo add transmute-charts http://charts.transmute.network

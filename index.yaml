@@ -3,7 +3,7 @@ entries:
   ganache:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2018-06-30T21:05:56.620498-05:00
+    created: 2018-07-01T11:15:02.580495-05:00
     description: Transmute Ganache Helm Chart (Danger!)
     digest: bae27b86eb9caaf27337a0f32fdff646d82aae5a54be0900c6e3ec2ade891b2f
     name: ganache
@@ -13,11 +13,11 @@ entries:
   ipfs:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2018-06-30T21:05:56.620759-05:00
+    created: 2018-07-01T11:15:02.580766-05:00
     description: Transmute IPFS Helm Chart (Danger!)
     digest: 234a7f979989a28afe4d16b416a3af6f549dba89be2c70bb8ca8500fb508dbbb
     name: ipfs
     urls:
     - ipfs-0.1.0.tgz
     version: 0.1.0
-generated: 2018-06-30T21:05:56.619934-05:00
+generated: 2018-07-01T11:15:02.580046-05:00
