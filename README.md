@@ -1,4 +1,4 @@
-#### Transmute Hybrid Infrastructure Charts
+#### Helm Charts for Hybrid Infrastructure
 
 [![Build Status](https://travis-ci.org/transmute-industries/transmute-charts.svg?branch=master)](https://travis-ci.org/transmute-industries/transmute-charts)
 
