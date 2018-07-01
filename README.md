@@ -33,5 +33,5 @@ npm run helm:index
 
 ### Thanks
 
-- https://hackernoon.com/using-a-private-github-repo-as-helm-chart-repo-https-access-95629b2af27c
-- https://github.com/lwolf/kube-charts
+- [Github Private Helm Chart Repo](https://hackernoon.com/using-a-private-github-repo-as-helm-chart-repo-https-access-95629b2af27c)
+- [Similar Helm Repo Example](https://github.com/lwolf/kube-charts)
