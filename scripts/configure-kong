@@ -1,0 +1,51 @@
+#!/bin/bash
+
+echo 'Configure: 🦍 + ☁️'
+
+# helm install --name api-gateway --set proxy.useTLS=false stable/kong 
+# minikube service list
+
+# IPFS
+export KONG_PROXY_URL=$(minikube service api-gateway-kong-proxy --url)
+export KONG_ADMIN_URL=$(minikube service api-gateway-kong-admin --url | sed 's,http://,https://,g')
+export IPFS_CLUSTER_IP=$(kubectl get service dapp-storage-ipfs -o json | jq -r '.spec.clusterIP');
+
+# Add IPFS API to Kong
+curl -k -X POST \
+  --url $KONG_ADMIN_URL/apis/ \
+  --data 'name=ipfs' \
+  --data 'hosts=ipfs.transmute.minikube' \
+  --data 'upstream_url=http://'$IPFS_CLUSTER_IP':5001/' \
+  | jq '.'
+
+# GET ALL KONG APIs
+# curl -k -X GET \
+#   --url $KONG_ADMIN_URL/apis/ \
+#   | jq '.'
+
+# DELETE A KONG API
+# curl -k -X DELETE \
+#   --url $KONG_ADMIN_URL/apis/d6b669ba-b451-4de1-a158-1400358a4ef9 \
+#   | jq '.'
+
+
+curl -X GET \
+  --url $KONG_PROXY_URL/api/v0/id \
+  -H 'Host: ipfs.transmute.minikube' 
+
+
+# GANACHE
+export KONG_PROXY_URL=$(minikube service api-gateway-kong-proxy --url)
+export KONG_ADMIN_URL=$(minikube service api-gateway-kong-admin --url | sed 's,http://,https://,g')
+export GANACHE_CLUSTER_IP=$(kubectl get service ethereum-testnet-ganache -o json | jq -r '.spec.clusterIP');
+curl -k -X POST \
+  --url $KONG_ADMIN_URL/apis/ \
+  --data 'name=ganache' \
+  --data 'hosts=ganache.transmute.minikube' \
+  --data 'upstream_url=http://'$GANACHE_CLUSTER_IP':8545/' \
+  | jq '.'
+
+curl -s -X POST \
+  --url $KONG_PROXY_URL \
+  -H 'Host: ganache.transmute.minikube' \
+  --data '{"jsonrpc":"2.0","method":"web3_clientVersion","params":[],"id":68}'
