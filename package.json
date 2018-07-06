@@ -19,7 +19,11 @@
   "bugs": {
     "url": "https://github.com/transmute-industries/transmute-charts/issues"
   },
-  "homepage": "https://github.com/transmute-industries/transmute-charts#readme"
+  "homepage": "https://github.com/transmute-industries/transmute-charts#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "swagger-jsdoc": "^1.9.7"
+  },
   "devDependencies": {
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^13.0.0",
