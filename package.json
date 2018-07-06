@@ -20,4 +20,9 @@
     "url": "https://github.com/transmute-industries/transmute-charts/issues"
   },
   "homepage": "https://github.com/transmute-industries/transmute-charts#readme"
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^13.0.0",
+    "eslint-plugin-import": "^2.13.0"
+  }
 }
