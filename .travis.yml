@@ -34,3 +34,6 @@ script:
 - helm install --name ethereum-testnet ./charts/ganache  
 - helm install --name api-gateway --set proxy.useTLS=false stable/kong 
 - kubectl get svc
+# wait for services
+- sleep 200
+- ./scripts/configure-kong-microservices
