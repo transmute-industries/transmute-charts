@@ -1,14 +1,18 @@
 {
   "name": "transmute-charts",
   "version": "1.0.0",
+  "private": true,
   "description": "[Github](https://github.com/transmute-industries/transmute-charts)",
-  "main": "index.js",
+  "engines": {
+    "node": "8.9.1"
+  },
   "scripts": {
     "helm:package": "helm package ./charts/* --destination ./docs",
     "helm:index": "helm repo index ./docs ",
     "helm:repo:update": "npm run helm:package && npm run helm:index && cp ./README.md ./docs/README.md",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "force:clean": "kubectl get pods -o json | jq -c '.items[] | select(.metadata.deletionTimestamp) | .metadata.name' | xargs -I '{}' kubectl delete pod --force --grace-period 0 '{}'"
+    "force:clean": "kubectl get pods -o json | jq -c '.items[] | select(.metadata.deletionTimestamp) | .metadata.name' | xargs -I '{}' kubectl delete pod --force --grace-period 0 '{}'",
+    "start": "node ./bin/www",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -21,12 +25,19 @@
   },
   "homepage": "https://github.com/transmute-industries/transmute-charts#readme",
   "dependencies": {
-    "express": "^4.16.3",
-    "swagger-jsdoc": "^1.9.7"
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
+    "express-async-await": "^1.1.0",
+    "swagger-jsdoc": "^1.9.7",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "express": "~4.16.0",
+    "morgan": "~1.9.0"
   },
   "devDependencies": {
-    "eslint": "^4.19.1",
+    "eslint": "^5.0.1",
     "eslint-config-airbnb-base": "^13.0.0",
+    "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-import": "^2.13.0"
   }
 }
