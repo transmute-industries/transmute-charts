@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: bitnami/express
+  repository: transmute/transmute-api
   tag: latest
   pullPolicy: IfNotPresent
 
@@ -13,7 +13,7 @@ service:
   name: api
   type: ClusterIP
   externalPort: 80
-  internalPort: 3000
+  internalPort: 5000
 
 ingress:
   enabled: true
