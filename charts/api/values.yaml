@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: transmute/transmute-api
-  tag: latest
+  tag: 0.1.0
   pullPolicy: IfNotPresent
 
 service:
