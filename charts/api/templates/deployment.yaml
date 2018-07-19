@@ -15,8 +15,8 @@ spec:
         app: {{ template "fullname" . }}
     spec:
       securityContext:
-        runAsUser: node
-        fsGroup: node
+        runAsUser: 1001
+        fsGroup: 1001
       containers:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -25,25 +25,25 @@ spec:
           - name: NGROK_SERVER_API_TOKEN
             valueFrom:
               secretKeyRef:
-              name: {{ template "ngrok.fullname" . }}
-              key: server-api-token
+                name: {{ template "ngrok.fullname" . }}
+                key: server-api-token
           - name: OKTA_API_TOKEN
             valueFrom:
               secretKeyRef:
-              name: {{ template "okta.fullname" . }}
-              key: api-token
+                name: {{ template "okta.fullname" . }}
+                key: api-token
           - name: OKTA_BASE_URL
             value: {{ default "" .Values.okta.baseUrl | quote }}
           - name: OKTA_CLIENT_ID
             valueFrom:
               secretKeyRef:
-              name: {{ template "okta.fullname" . }}
-              key: client-id
+                name: {{ template "okta.fullname" . }}
+                key: client-id
           - name: OKTA_CLIENT_SECRET
             valueFrom:
               secretKeyRef:
-              name: {{ template "okta.fullname" . }}
-              key: client-secret
+                name: {{ template "okta.fullname" . }}
+                key: client-secret
           - name: OKTA_DEFAULT_GROUP_ID
             value: {{ default "" .Values.okta.defaultGroupId | quote }}
           - name: OKTA_TEST_ADMIN_ID
@@ -65,7 +65,7 @@ spec:
           containerPort: {{ .Values.service.internalPort }}
         livenessProbe:
           httpGet:
-            path: /
+            path: /api/v0/version
             port: {{ .Values.service.internalPort }}
           initialDelaySeconds: 180
           periodSeconds: 5
@@ -73,7 +73,7 @@ spec:
           failureThreshold: 10
         readinessProbe:
           httpGet:
-            path: /
+            path: /api/v0/version
             port: {{ .Values.service.internalPort }}
           initialDelaySeconds: 5
           periodSeconds: 5
