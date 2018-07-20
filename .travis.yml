@@ -32,5 +32,4 @@ script:
 - sleep 200 
 - helm install --name dapp-storage ./charts/ipfs  
 - helm install --name ethereum-testnet ./charts/ganache
-- helm install --name transmute-api ./charts/api
 - kubectl get svc
