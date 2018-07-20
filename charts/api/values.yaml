@@ -1,48 +1,54 @@
-# Default values for api.
+# Default values for mean-k8s.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
-
 replicaCount: 1
-
 image:
-  repository: bitnami/express
-  tag: latest
+  repository: transmute/transmute-api
+  tag: 0.2.0
   pullPolicy: IfNotPresent
-
 service:
-  name: api
-  type: ClusterIP
-  externalPort: 80
-  internalPort: 3000
+  name: transmute-api
+  type: NodePort
+  externalPort: 5000
+  internalPort: 5000
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
 
-ingress:
-  enabled: true
-  annotations: {}
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
-  path: /
-  hosts:
-    - transmute-api.local
-    - transmute-api.test
-  tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
+ngrok:
+  serverApiToken:
 
-resources: {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #  cpu: 100m
-  #  memory: 128Mi
-  # requests:
-  #  cpu: 100m
-  #  memory: 128Mi
+okta:
+  apiToken:
+  baseUrl:
+  clientId:
+  clientSecret:
 
-nodeSelector: {}
+  defaultGroupId:
 
-tolerations: []
+  testAdminId:
+  testAdminPassword:
+  testAdminUsername:
 
-affinity: {}
+  testExampleUserUsername:
+
+  testUserId:
+  testUserPassword:
+  testUserUsername:
+
+  ## Enable persistence using Persistent Volume Claims
+  ## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
+  ##
+  persistence:
+    enabled: true
+    ## If defined, volume.beta.kubernetes.io/storage-class: <storageClass>
+    ## Default: volume.alpha.kubernetes.io/storage-class: default
+    ##
+    # storageClass:
+    accessMode: ReadWriteOnce
+    size: 8Gi
+
