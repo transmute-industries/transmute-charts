@@ -9,6 +9,7 @@ matrix:
         - CHANGE_MINIKUBE_NONE_USER=true
         - TRANSMUTE_CRITOOLS_VERSION='v1.11.1'
         - TRANSMUTE_HELM_VERSION='v2.11.0'
+        - TRANSMUTE_ISTIO_VERSION='1.0.2'
         - TRANSMUTE_KUBE_VERSION='v1.11.3'
         - TRANSMUTE_MINIKUBE_VERSION='v0.28.2'
 
@@ -36,7 +37,7 @@ before_script:
   # Starting Minikube
   - sudo minikube start --vm-driver=none --kubernetes-version="$TRANSMUTE_KUBE_VERSION"
   - minikube update-context
-  - JSONPATH='{range .items[*]}{@.metadata.name}:{range @.status.conditions[*]}{@.type}={@.status};{end}{end}'
+  - "JSONPATH='{range .items[*]}{@.metadata.name}:{range @.status.conditions[*]}{@.type}={@.status};{end}{end}'"
   - until kubectl get nodes -o jsonpath="$JSONPATH" 2>&1 | grep -q "Ready=True"; do sleep 1; done
 
   # Installing Helm
@@ -47,7 +48,11 @@ before_script:
   # Starting Helm
   - helm init --wait
 
+  # Getting Istio
+  - git clone https://github.com/istio/istio.git -b "$TRANSMUTE_ISTIO_VERSION" istio
+
 script:
+  - helm install ./istio/install/kubernetes/helm/istio --name istio --namespace istio-system --set "gateways.istio-ingressgateway.type=NodePort" --set "gateways.istio-egressgateway.type=NodePort"
   - helm install --name dapp-storage ./charts/ipfs
   - helm install --name ethereum-testnet ./charts/ganache
   - helm install --name transmute-api ./charts/api
