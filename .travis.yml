@@ -7,12 +7,19 @@ matrix:
       language: bash
       env:
         - CHANGE_MINIKUBE_NONE_USER=true
+        - TRANSMUTE_CRITOOLS_VERSION='v1.11.1'
         - TRANSMUTE_HELM_VERSION='v2.11.0'
         - TRANSMUTE_KUBE_VERSION='v1.11.3'
         - TRANSMUTE_MINIKUBE_VERSION='v0.28.2'
 
 before_script:
-  # Installing Kubectl
+  # Install cri-tools
+  - curl -Lo crictl.tar.gz "https://github.com/kubernetes-sigs/cri-tools/releases/download/$TRANSMUTE_CRITOOLS_VERSION/crictl-$TRANSMUTE_CRITOOLS_VERSION-linux-amd64.tar.gz"
+  - tar -xzvf crictl.tar.gz
+  - sudo mv ./crictl /usr/local/bin/crictl
+  - rm crictl.tar.gz
+
+  # Installing kubectl
   - curl -Lo kubectl "https://storage.googleapis.com/kubernetes-release/release/$TRANSMUTE_KUBE_VERSION/bin/linux/amd64/kubectl"
   - chmod +x ./kubectl
   - sudo mv ./kubectl /usr/local/bin/kubectl
