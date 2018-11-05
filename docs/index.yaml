@@ -2,7 +2,7 @@ apiVersion: v1
 entries:
   api:
   - apiVersion: v1
-    created: 2018-11-05T01:28:47.676274387+01:00
+    created: 2018-11-05T01:40:30.831701638+01:00
     description: A Helm chart for Kubernetes
     digest: d5528d3e5b18214f2d205eecbdb6a36fbc6ebf457336fac8492f6cdd4396145e
     name: api
@@ -12,7 +12,7 @@ entries:
   ganache:
   - apiVersion: v1.1
     appVersion: "1.1"
-    created: 2018-11-05T01:28:47.677173656+01:00
+    created: 2018-11-05T01:40:30.832434871+01:00
     description: Transmute Ganache Helm Chart (Danger!)
     digest: b057fb9e35f688395febc5e7a9668f3fd98ed50dd430eea47cdaca895931b110
     name: ganache
@@ -21,7 +21,7 @@ entries:
     version: 0.1.1
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2018-11-05T01:28:47.676854239+01:00
+    created: 2018-11-05T01:40:30.832230857+01:00
     description: Transmute Ganache Helm Chart (Danger!)
     digest: bae27b86eb9caaf27337a0f32fdff646d82aae5a54be0900c6e3ec2ade891b2f
     name: ganache
@@ -31,11 +31,11 @@ entries:
   ipfs:
   - apiVersion: v1
     appVersion: "1.0"
-    created: 2018-11-05T01:28:47.677424921+01:00
+    created: 2018-11-05T01:40:30.832645103+01:00
     description: Transmute IPFS Helm Chart (Danger!)
     digest: 234a7f979989a28afe4d16b416a3af6f549dba89be2c70bb8ca8500fb508dbbb
     name: ipfs
     urls:
     - ipfs-0.1.0.tgz
     version: 0.1.0
-generated: 2018-11-05T01:28:47.675090082+01:00
+generated: 2018-11-05T01:40:30.830949325+01:00
