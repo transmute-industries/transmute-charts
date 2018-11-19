@@ -1,35 +1,54 @@
-sudo: required
-
-env:
-- CHANGE_MINIKUBE_NONE_USER=true
+---
+matrix:
+  include:
+    - os: linux
+      dist: xenial
+      sudo: required
+      language: bash
+      env:
+        - CHANGE_MINIKUBE_NONE_USER=true
+        - TRANSMUTE_CRITOOLS_VERSION='v1.11.1'
+        - TRANSMUTE_HELM_VERSION='v2.11.0'
+        - TRANSMUTE_KUBE_VERSION='v1.11.3'
+        - TRANSMUTE_MINIKUBE_VERSION='v0.28.2'
 
 before_script:
-# install minikube
-- sudo apt-get update
-- curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/v1.9.0/bin/linux/amd64/kubectl && chmod +x kubectl && sudo mv kubectl /usr/local/bin/
-- curl -Lo minikube https://storage.googleapis.com/minikube/releases/v0.25.2/minikube-linux-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/
-- sudo minikube start --vm-driver=none --kubernetes-version=v1.9.0
-- minikube update-context
-- JSONPATH='{range .items[*]}{@.metadata.name}:{range @.status.conditions[*]}{@.type}={@.status};{end}{end}'; until kubectl get nodes -o jsonpath="$JSONPATH" 2>&1 | grep -q "Ready=True"; do sleep 1; done
-# install helm
-- curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get > get_helm.sh
-- chmod 700 get_helm.sh
-- sudo ./get_helm.sh
-# install nsenter
-- sudo apt-get install libncurses5-dev libslang2-dev gettext zlib1g-dev libselinux1-dev debhelper lsb-release pkg-config po-debconf autoconf automake autopoint libtool
-- TMP=$(mktemp -d --suffix=NSENTER_TMP)
-- wget https://www.kernel.org/pub/linux/utils/util-linux/v2.30/util-linux-2.30.2.tar.gz -qO - | tar -xz -C $TMP/
-- cd $TMP/util-linux-2.30.2 && ./autogen.sh && ./configure && make nsenter
-- mkdir -p $HOME/.local/bin
-- sudo cp -v $TMP/util-linux-2.30.2/nsenter $HOME/.local/bin/nsenter
-- sudo chmod +x $HOME/.local/bin/nsenter
-- sudo cp -v $HOME/.local/bin/nsenter /usr/bin/nsenter
-- cd $TRAVIS_BUILD_DIR
+  # Installing socat
+  - sudo apt-get update -qq
+  - sudo apt-get install socat -qq
+
+  # Installing cri-tools
+  - curl -Lo crictl.tar.gz "https://github.com/kubernetes-sigs/cri-tools/releases/download/$TRANSMUTE_CRITOOLS_VERSION/crictl-$TRANSMUTE_CRITOOLS_VERSION-linux-amd64.tar.gz"
+  - tar -xzvf crictl.tar.gz
+  - sudo mv ./crictl /usr/local/bin/crictl
+  - rm crictl.tar.gz
+
+  # Installing kubectl
+  - curl -Lo kubectl "https://storage.googleapis.com/kubernetes-release/release/$TRANSMUTE_KUBE_VERSION/bin/linux/amd64/kubectl"
+  - chmod +x ./kubectl
+  - sudo mv ./kubectl /usr/local/bin/kubectl
+
+  # Installing Minikube
+  - curl -Lo minikube "https://storage.googleapis.com/minikube/releases/$TRANSMUTE_MINIKUBE_VERSION/minikube-linux-amd64"
+  - chmod +x ./minikube
+  - sudo mv ./minikube /usr/local/bin/minikube
+
+  # Starting Minikube
+  - sudo minikube start --vm-driver=none --kubernetes-version="$TRANSMUTE_KUBE_VERSION"
+  - minikube update-context
+  - JSONPATH='{range .items[*]}{@.metadata.name}:{range @.status.conditions[*]}{@.type}={@.status};{end}{end}'
+  - until kubectl get nodes -o jsonpath="$JSONPATH" 2>&1 | grep -q "Ready=True"; do sleep 1; done
+
+  # Installing Helm
+  - curl -Lo get_helm.sh "https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get"
+  - chmod +x ./get_helm.sh
+  - ./get_helm.sh --version "$TRANSMUTE_HELM_VERSION"
+
+  # Starting Helm
+  - helm init --wait
 
 script:
-- helm init
-# wait for tiller
-- sleep 200 
-- helm install --name dapp-storage ./charts/ipfs  
-- helm install --name ethereum-testnet ./charts/ganache  
-- kubectl get svc
+  - helm install --name dapp-storage ./charts/ipfs
+  - helm install --name ethereum-testnet ./charts/ganache
+  - helm install --name transmute-api ./charts/api
+  - kubectl get services

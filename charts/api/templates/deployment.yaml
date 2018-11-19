@@ -1,0 +1,82 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "fullname" . }}
+  labels:
+   app: {{ template "fullname" . }}
+   chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+   release: "{{ .Release.Name }}"
+   heritage: "{{ .Release.Service }}"
+spec:
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "fullname" . }}
+    spec:
+      securityContext:
+        runAsUser: 1001
+        fsGroup: 1001
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        env:
+          - name: NGROK_SERVER_API_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: {{ template "ngrok.fullname" . }}
+                key: server-api-token
+          - name: OKTA_API_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: {{ template "okta.fullname" . }}
+                key: api-token
+          - name: OKTA_BASE_URL
+            value: {{ default "" .Values.okta.baseUrl | quote }}
+          - name: OKTA_CLIENT_ID
+            valueFrom:
+              secretKeyRef:
+                name: {{ template "okta.fullname" . }}
+                key: client-id
+          - name: OKTA_CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: {{ template "okta.fullname" . }}
+                key: client-secret
+          - name: OKTA_DEFAULT_GROUP_ID
+            value: {{ default "" .Values.okta.defaultGroupId | quote }}
+          - name: OKTA_TEST_ADMIN_ID
+            value: {{ default "" .Values.okta.testAdminId | quote }}
+          - name: OKTA_TEST_ADMIN_PASSWORD
+            value: {{ default "" .Values.okta.testAdminPassword | quote }}
+          - name: OKTA_TEST_ADMIN_USERNAME
+            value: {{ default "" .Values.okta.testAdminUsername | quote }}
+          - name: OKTA_TEST_EXAMPLE_USER_USERNAME
+            value: {{ default "" .Values.okta.testExampleUserUsername | quote }}
+          - name: OKTA_TEST_USER_ID
+            value: {{ default "" .Values.okta.testUserId | quote }}
+          - name: OKTA_TEST_USER_PASSWORD
+            value: {{ default "" .Values.okta.testUserPassword | quote }}
+          - name: OKTA_TEST_USER_USERNAME
+            value: {{ default "" .Values.okta.testUserUsername | quote }}
+        ports:
+        - name: internalport
+          containerPort: {{ .Values.service.internalPort }}
+        livenessProbe:
+          httpGet:
+            path: /api/v0/version
+            port: {{ .Values.service.internalPort }}
+          initialDelaySeconds: 180
+          periodSeconds: 5
+          timeoutSeconds: 5
+          failureThreshold: 10
+        readinessProbe:
+          httpGet:
+            path: /api/v0/version
+            port: {{ .Values.service.internalPort }}
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          timeoutSeconds: 1
+        resources:
+{{ toYaml .Values.resources | indent 12 }}
