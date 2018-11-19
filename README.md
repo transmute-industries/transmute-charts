@@ -21,7 +21,7 @@ helm install --name ethereum-testnet transmute-charts/ganache
 ### ipfs
 
 ```
-helm install --name ethereum-testnet transmute-charts/ganache
+helm install --name ipfs transmute-charts/ipfs
 ```
 
 ## Development
