@@ -2,6 +2,10 @@
 
 [![Build Status](https://travis-ci.org/transmute-industries/transmute-charts.svg?branch=master)](https://travis-ci.org/transmute-industries/transmute-charts)
 
+<p align="center">
+  <img src="./transmute-banner.png"/>
+</p>
+
 [Transmute Charts Github Repository](https://github.com/transmute-industries/transmute-charts)
 
 Helm repository hosted using github-pages to simplify installation and dependency management of charts. Currently ingress must be configured seperately.
